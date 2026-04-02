@@ -119,6 +119,20 @@
     .tools-section, .contact-section { padding-left: 24px; padding-right: 24px; }
   }
   @media (max-width: 480px) { nav .nav-links { display: none; } }
+
+  /* 6-step workflow: 6 columns on desktop, 3+3 on mobile */
+  .workflow-steps.six-col { grid-template-columns: repeat(6, 1fr); }
+  @media (max-width: 600px) {
+    .workflow-steps.six-col { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Horizontal media gallery (Penti, Proximo): stack vertically on mobile */
+  .media-row { display: flex; gap: 16px; height: 400px; justify-content: center; margin: 32px 0; }
+  .media-row > div { height: 100%; overflow: hidden; border-radius: 6px; flex-shrink: 0; }
+  @media (max-width: 600px) {
+    .media-row { flex-direction: column; height: auto; }
+    .media-row > div { height: auto !important; width: 100% !important; }
+  }
 </style>
 </head>
 <body>
@@ -223,7 +237,7 @@
     <p>Full AI production for the Beymen Collection Fall/Winter 2025–2026 campaign, covering both Women's and Men's collections. All visuals were generated using AI and are currently live on Beymen's website.</p>
     <h2>Production Workflow</h2>
     <p>Received original pose references from Beymen's creative team. Replaced human models with custom-trained AI model LoRAs while preserving exact body positioning and garment interaction. Extracted garments from flat-lay product photography and applied them to AI models using virtual try-on techniques, maintaining fabric texture, drape, and color fidelity.</p>
-    <div class="workflow-steps" style="grid-template-columns: repeat(6, 1fr);">
+    <div class="workflow-steps six-col">
       <div class="workflow-step"><div class="step-num">01</div><div class="step-label">Beymen Pose Reference</div></div>
       <div class="workflow-step"><div class="step-num">02</div><div class="step-label">Custom LoRA AI Models</div></div>
       <div class="workflow-step"><div class="step-num">03</div><div class="step-label">Flat-Lay Extraction</div></div>
@@ -275,7 +289,7 @@
     </ul>
     <h2>Key Screens</h2>
   </div>
-  <div class="detail-gallery" style="grid-template-columns: repeat(2,1fr);">
+  <div class="detail-gallery">
     <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/fashion-studio-key-1.webp" alt="Key Screen 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
     <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/fashion-studio-key-2.webp" alt="Key Screen 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
     <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/fashion-studio-key-3.webp" alt="Key Screen 3" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
@@ -294,7 +308,7 @@
     <p>Desktop application built for fashion brands to automate product detail page imagery at scale. Select AI models, pair them with garments, hit run - and receive hundreds of studio-quality PDP images in hours instead of weeks.</p>
     <h2>How It Works</h2>
     <p>The system chains together multiple AI stages in the background: character sheet generation for consistent AI models, garment fitting from flat-lay product photos, face enhancement, and a library of preset PDP poses. Users only need to select which models and garments to use, set the number of outputs per product (1–5), and start the batch.</p>
-    <div class="workflow-steps" style="grid-template-columns: repeat(6, 1fr);">
+    <div class="workflow-steps six-col">
       <div class="workflow-step"><div class="step-num">01</div><div class="step-label">Select AI Models</div></div>
       <div class="workflow-step"><div class="step-num">02</div><div class="step-label">Pair with Garments</div></div>
       <div class="workflow-step"><div class="step-num">03</div><div class="step-label">Character Sheets</div></div>
@@ -322,7 +336,7 @@
     <p>AI-generated product visuals for Penti's pajama and underwear lines. Studio-quality on-model shots produced entirely through generative AI, matching the brand's existing visual standards for e-commerce product pages.</p>
     <h2>Gallery</h2>
   </div>
-  <div style="display:flex; gap:16px; height:400px; justify-content:center; margin:32px 0;">
+  <div class="media-row">
     <div style="height:100%; aspect-ratio:4/5; overflow:hidden; border-radius:6px; flex-shrink:0;">
       <img src="images/penti-1.webp" alt="Penti Look 1" style="width:100%;height:100%;object-fit:cover;display:block;">
     </div>
@@ -345,7 +359,7 @@
     <p>AI-generated advertising visuals and video content for Jose Cuervo Tequila and whiskey brands. Product photography with precise bottle detail, label accuracy, and atmospheric lifestyle settings - all produced through generative AI with custom enhancement workflows for logo and text fidelity.</p>
     <h2>Gallery</h2>
   </div>
-  <div style="display:flex; gap:16px; height:400px; justify-content:center; margin:32px 0;">
+  <div class="media-row">
     <div style="height:100%; aspect-ratio:1/1; overflow:hidden; border-radius:6px; flex-shrink:0;">
       <video src="images/proximo-1.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
     </div>
@@ -368,7 +382,7 @@
     <p>Lifestyle product imagery for camping and outdoor gear - tents and sleeping bags placed in natural mountain and wilderness settings. Focus on creating aspirational outdoor scenes while maintaining product accuracy and brand consistency.</p>
     <h2>Gallery</h2>
   </div>
-  <div class="detail-gallery three-col" style="grid-template-columns: repeat(3,1fr);">
+  <div class="detail-gallery three-col">
     <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/teton-1.webp" alt="Teton 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
     <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/teton-2.webp" alt="Teton 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
     <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/teton-3.webp" alt="Teton 3" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
