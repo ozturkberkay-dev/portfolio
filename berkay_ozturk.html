@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berkay Öztürk — Generative AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #FAFAF8; --bg-card: #F0EFEC; --text-primary: #1A1A1A;
+    --text-secondary: #555555; --text-muted: #999999; --accent: #C4956A;
+    --accent-dark: #8B6341; --accent-light: #F5E6D3; --divider: #D8D6D0;
+    --font: 'Space Grotesk', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--accent-light); color: var(--accent-dark); }
+  a { text-decoration: none; color: inherit; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,248,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--divider); }
+  nav .nav-inner { max-width: 1100px; margin: 0 auto; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+  nav .nav-name { font-weight: 600; font-size: 14px; letter-spacing: 0.02em; cursor: pointer; }
+  nav .nav-links { display: flex; gap: 28px; list-style: none; }
+  nav .nav-links a { font-size: 13px; font-weight: 400; color: var(--text-muted); transition: color 0.25s; }
+  nav .nav-links a:hover { color: var(--accent-dark); }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .hero { max-width: 900px; margin: 0 auto; padding: 150px 40px 0; text-align: center; }
+  .hero h1 { font-size: clamp(32px,4.5vw,48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 10px; }
+  .hero .subtitle { font-size: 14px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 112px; }
+
+  .intro-frame { background: #383734; width: 100%; padding: 48px 40px; margin-bottom: 112px; }
+  .intro-frame .intro { font-size: 15px; line-height: 1.8; color: #efeae8; font-weight: 300; max-width: 780px; margin: 0 auto; text-align: center; }
+
+  .projects-section { max-width: 1100px; margin: 0 auto; padding: 0 40px 40px; }
+  .projects-section .section-label { text-align: center; margin-bottom: 40px; }
+  .projects-section .section-label h2 { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+  .projects-section .section-label p { font-size: 12px; color: var(--text-muted); font-weight: 300; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+  .project-item { text-align: center; cursor: pointer; }
+  .project-item .thumb-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 6px; margin-bottom: 16px; background: var(--bg-card); }
+  .project-item .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .project-item:hover .thumb-wrapper img { transform: scale(1.04); }
+
+  .thumb-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 2px dashed var(--divider); border-radius: 6px; }
+  .thumb-placeholder svg { width: 28px; height: 28px; stroke: var(--divider); }
+  .thumb-placeholder span { font-size: 11px; color: var(--text-muted); font-weight: 300; }
+
+  .project-item .project-name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; transition: color 0.25s; }
+  .project-item:hover .project-name { color: var(--accent-dark); }
+  .project-item .project-tags { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+
+  .tools-section { max-width: 1100px; margin: 0 auto; padding: 60px 40px 40px; text-align: center; border-top: 1px solid var(--divider); }
+  .tools-section h2 { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
+  .tools-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 650px; margin: 0 auto; }
+  .tool-tag { padding: 5px 14px; border-radius: 100px; border: 1px solid var(--divider); font-size: 12px; font-weight: 400; color: var(--text-secondary); transition: all 0.25s; }
+  .tool-tag:hover { border-color: var(--accent); color: var(--accent-dark); background: var(--accent-light); }
+
+  .contact-section { text-align: center; padding: 50px 40px 70px; max-width: 1100px; margin: 0 auto; }
+  .contact-section h2 { font-size: 24px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .contact-section p { font-size: 14px; color: var(--text-secondary); font-weight: 300; margin-bottom: 24px; }
+  .contact-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .contact-links a { font-size: 13px; font-weight: 500; color: var(--accent-dark); padding: 9px 22px; border: 1px solid var(--accent); border-radius: 100px; transition: all 0.25s; }
+  .contact-links a:hover { background: var(--accent); color: white; }
+
+  footer { text-align: center; padding: 20px 40px; font-size: 11px; color: var(--text-muted); font-weight: 300; border-top: 1px solid var(--divider); max-width: 1100px; margin: 0 auto; }
+
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* DETAIL PAGES */
+  .detail { max-width: 900px; margin: 0 auto; padding: 120px 40px 80px; }
+  .detail-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 400; color: var(--text-muted); margin-bottom: 40px; cursor: pointer; transition: color 0.25s; }
+  .detail-back:hover { color: var(--accent-dark); }
+  .detail-back svg { width: 16px; height: 16px; }
+  .detail h1 { font-size: clamp(28px,4vw,40px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; text-align: center; }
+  .detail .detail-tags { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; text-align: center; }
+  .detail .detail-hero-img { width: 100%; border-radius: 8px; margin-bottom: 40px; background: var(--bg-card); aspect-ratio: 21/9; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
+  .detail .detail-hero-img svg { width: 36px; height: 36px; stroke: var(--divider); }
+  .detail .detail-hero-img span { font-size: 12px; color: var(--text-muted); font-weight: 300; }
+  .detail .detail-body { max-width: 700px; margin: 0 auto; }
+  .detail .detail-body h2 { font-size: 18px; font-weight: 600; margin: 36px 0 12px; letter-spacing: -0.01em; text-align: center; }
+  .detail .detail-body p { font-size: 15px; line-height: 1.8; color: var(--text-secondary); font-weight: 300; margin-bottom: 16px; text-align: justify; }
+  .detail .detail-body ul { list-style: none; margin-bottom: 16px; }
+  .detail .detail-body ul li { font-size: 14px; color: var(--text-secondary); font-weight: 300; padding: 4px 0 4px 18px; position: relative; line-height: 1.7; text-align: justify; }
+  .detail .detail-body ul li::before { content: ''; position: absolute; left: 0; top: 12px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .detail .detail-gallery { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin: 32px 0; }
+  .detail .detail-gallery.three-col { grid-template-columns: repeat(3,1fr); }
+  .detail .gallery-slot { aspect-ratio: 4/5; border-radius: 6px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; }
+  .detail .gallery-slot.square { aspect-ratio: 1/1; }
+  .detail .gallery-slot svg { width: 24px; height: 24px; stroke: var(--divider); }
+  .detail .gallery-slot span { font-size: 10px; color: var(--text-muted); }
+  .detail .workflow-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 8px; margin: 24px 0; }
+  .detail .workflow-step { background: var(--bg-card); border-radius: 6px; padding: 14px 12px; text-align: center; }
+  .detail .workflow-step .step-num { font-size: 11px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+  .detail .workflow-step .step-label { font-size: 12px; font-weight: 500; color: var(--text-primary); line-height: 1.4; }
+  .detail .detail-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--accent-dark); padding: 9px 20px; border: 1px solid var(--accent); border-radius: 100px; transition: all 0.25s; margin-top: 8px; }
+  .detail .detail-link:hover { background: var(--accent); color: white; }
+
+  @media (max-width: 900px) {
+    .projects-grid { grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .detail .detail-gallery, .detail .detail-gallery.three-col { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 130px 24px 50px; }
+    .projects-section { padding: 0 24px 40px; }
+    .projects-grid { grid-template-columns: 1fr; gap: 28px; }
+    nav .nav-inner { padding: 14px 24px; }
+    nav .nav-links { gap: 16px; }
+    .detail { padding: 110px 24px 60px; }
+    .detail .detail-gallery, .detail .detail-gallery.three-col { grid-template-columns: 1fr; }
+    .tools-section, .contact-section { padding-left: 24px; padding-right: 24px; }
+  }
+  @media (max-width: 480px) { nav .nav-links { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-name" onclick="showHome()">Berkay Öztürk</div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showHome(); return false;">Projects</a></li>
+      <li><a href="#" onclick="showHome(); setTimeout(()=>document.getElementById('tools').scrollIntoView({behavior:'smooth'}),100); return false;">Tools</a></li>
+      <li><a href="#" onclick="showHome(); setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100); return false;">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page active" id="page-home">
+  <section class="hero">
+    <h1>BERKAY ÖZTÜRK</h1>
+    <div class="subtitle">Generative AI Engineer / Creative Technologist / 3D Artist</div>
+  </section>
+
+  <div class="intro-frame">
+    <p class="intro">AI-driven creative production specialist building generative AI workflows for fashion brands. I combine strong visual sensibility with deep technical execution from training custom LoRAs and developing enhancement pipelines to shipping full-stack SaaS platforms for virtual try-on.</p>
+  </div>
+
+  <section class="projects-section">
+    <div class="section-label">
+      <h2>Projects</h2>
+      <p>(click to view more)</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-item fade-up" onclick="showProject('beymen')">
+        <div class="thumb-wrapper">
+          <img src="images/beymen-thumb.webp" alt="Beymen Collection">
+        </div>
+        <div class="project-name">Beymen Collection</div>
+        <div class="project-tags">LoRA / Virtual Try-On / Campaign</div>
+      </div>
+      <div class="project-item fade-up" onclick="showProject('studio')">
+        <div class="thumb-wrapper">
+          <img src="images/fashion-studio-thumb.webp" alt="AI Fashion Studio">
+        </div>
+        <div class="project-name">AI Fashion Studio</div>
+        <div class="project-tags">SaaS / Try-On / Video</div>
+      </div>
+      <div class="project-item fade-up" onclick="showProject('pdp')">
+        <div class="thumb-wrapper">
+          <img src="images/PDP-thumb.webp" alt="Batch PDP System">
+        </div>
+        <div class="project-name">Batch PDP System</div>
+        <div class="project-tags">Desktop App / Automation</div>
+      </div>
+      <div class="project-item fade-up" onclick="showProject('penti')">
+        <div class="thumb-wrapper">
+          <img src="images/penti-thumb.webp" alt="Penti">
+          </div>
+          <div class="project-name">Penti</div>
+        <div class="project-tags">Sleepwear & Underwear / PDP</div>
+      </div>
+      <div class="project-item fade-up" onclick="showProject('proximo')">
+        <div class="thumb-wrapper">
+          <img src="images/proximo-thumb.webp" alt="Proximo Spirits">
+        </div>
+        <div class="project-name">Proximo Spirits</div>
+        <div class="project-tags">Product Photography / Lifestyle / Video</div>
+      </div>
+      <div class="project-item fade-up" onclick="showProject('teton')">
+        <div class="thumb-wrapper">
+          <img src="images/teton-thumb.webp" alt="Teton Sports">
+        </div>
+        <div class="project-name">Teton Sports</div>
+        <div class="project-tags">Outdoor Gear / Lifestyle Imagery</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tools-section" id="tools">
+    <h2>Tools & Technologies</h2>
+    <div class="tools-list">
+      <span class="tool-tag">Stable Diffusion</span><span class="tool-tag">ComfyUI</span><span class="tool-tag">LoRA Training</span><span class="tool-tag">Flux</span><span class="tool-tag">Node.js</span><span class="tool-tag">Express</span><span class="tool-tag">PostgreSQL</span><span class="tool-tag">Python</span><span class="tool-tag">MediaPipe</span><span class="tool-tag">Vertex AI</span><span class="tool-tag">Gemini API</span><span class="tool-tag">Railway</span><span class="tool-tag">Git / GitHub</span>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <h2>Let's connect</h2>
+    <p>Currently open to opportunities in generative AI and fashion technology.</p>
+    <div class="contact-links">
+      <a href="mailto:ozturkberkay96@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/berkay-ozturk-arch/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+  <footer>© 2026 Berkay Öztürk · Turkey</footer>
+</div>
+
+<!-- BEYMEN -->
+<div class="page" id="page-beymen"><div class="detail">
+  <div class="detail-back" onclick="showHome()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>Back to Projects</div>
+  <h1>Beymen Collection 2025 FW</h1>
+  <div class="detail-tags">LoRA Training / Virtual Try-On / Commercial Campaign</div>
+  <img class="detail-hero-img" src="images/beymen-hero.webp" alt="Beymen Collection 2025 FW Hero Campaign Image" style="display:block; object-fit:cover;">
+  <div class="detail-body">
+    <p>Full AI production for the Beymen Collection Fall/Winter 2025–2026 campaign, covering both Women's and Men's collections. All visuals were generated using AI and are currently live on Beymen's website.</p>
+    <h2>Production Workflow</h2>
+    <p>Received original pose references from Beymen's creative team. Replaced human models with custom-trained AI model LoRAs while preserving exact body positioning and garment interaction. Extracted garments from flat-lay product photography and applied them to AI models using virtual try-on techniques, maintaining fabric texture, drape, and color fidelity.</p>
+    <div class="workflow-steps" style="grid-template-columns: repeat(6, 1fr);">
+      <div class="workflow-step"><div class="step-num">01</div><div class="step-label">Beymen Pose Reference</div></div>
+      <div class="workflow-step"><div class="step-num">02</div><div class="step-label">Custom LoRA AI Models</div></div>
+      <div class="workflow-step"><div class="step-num">03</div><div class="step-label">Flat-Lay Extraction</div></div>
+      <div class="workflow-step"><div class="step-num">04</div><div class="step-label">Virtual Try-On</div></div>
+      <div class="workflow-step"><div class="step-num">05</div><div class="step-label">Enhancement Pipeline</div></div>
+      <div class="workflow-step"><div class="step-num">06</div><div class="step-label">Final Delivery</div></div>
+    </div>
+    <h2>Gallery</h2>
+  </div>
+  <div class="detail-gallery" style="max-width:700px; margin:32px auto;">
+    <div class="gallery-slot"><img src="images/beymen-w1.webp" alt="Beymen Women's Look 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot"><img src="images/beymen-w2.webp" alt="Beymen Women's Look 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot"><img src="images/beymen-m1.webp" alt="Beymen Men's Look 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot"><img src="images/beymen-m2.webp" alt="Beymen Men's Look 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+  </div>
+  <div class="detail-body" style="margin-top:24px;">
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a class="detail-link" href="https://www.beymen.com/tr/2025fw-beymencollection-kadin-c" target="_blank">View Women's Collection on Beymen.com ↗</a>
+      <a class="detail-link" href="https://www.beymen.com/tr/2025fw-beymencollection-erkek-c" target="_blank">View Men's Collection on Beymen.com ↗</a>
+    </div>
+  </div>
+</div></div>
+
+<!-- AI FASHION STUDIO -->
+<div class="page" id="page-studio"><div class="detail">
+  <div class="detail-back" onclick="showHome()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>Back to Projects</div>
+  <h1>AI Fashion Studio</h1>
+  <div class="detail-tags">SaaS Platform / Virtual Try-On / Video Generation</div>
+  <img class="detail-hero-img" src="images/fashion-studio-hero.webp" alt="AI Fashion Studio Hero" style="display:block; object-fit:cover;">
+  <div class="detail-body">
+    <p>Multi-user web platform for AI-powered fashion visualization. Features a chatbot-style interface where users can upload flat-lay garment images and receive virtual try-on results, enhanced images, and 360° videos all in one workflow.</p>
+    <h2>Platform Capabilities</h2>
+    <ul>
+      <li>Virtual try-on from flat-lay garment images</li>
+      <li>1K / 2K / 4K image enhancement pipeline</li>
+      <li>MediaPipe-based face quality improvement</li>
+      <li>360-degree video generation</li>
+      <li>Clothing catalog with visual search</li>
+      <li>Credit-based usage system with admin panel</li>
+    </ul>
+    <h2>Technical Stack</h2>
+    <ul>
+      <li>Node.js / Express backend with PostgreSQL</li>
+      <li>JWT authentication and session management</li>
+      <li>Vertex AI + Gemini API integration</li>
+      <li>Kling v3 Pro for video generation</li>
+      <li>Railway deployment via GitHub CI/CD</li>
+      <li>Mobile-optimized with sleep-state recovery</li>
+    </ul>
+    <h2>Key Screens</h2>
+  </div>
+  <div class="detail-gallery" style="grid-template-columns: repeat(2,1fr);">
+    <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/fashion-studio-key-1.webp" alt="Key Screen 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/fashion-studio-key-2.webp" alt="Key Screen 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/fashion-studio-key-3.webp" alt="Key Screen 3" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot" style="aspect-ratio:3/2;overflow:hidden;"><video src="images/fashion-studio-key-4.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;"></video></div>
+  </div>
+  <div class="detail-body"><p style="font-size:13px; color:var(--text-muted); font-style:italic; margin-top:8px;">Started as a Python/Tkinter desktop pipeline — evolved into a full multi-user SaaS with chatbot UI.</p></div>
+</div></div>
+
+<!-- BATCH PDP -->
+<div class="page" id="page-pdp"><div class="detail">
+  <div class="detail-back" onclick="showHome()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>Back to Projects</div>
+  <h1>Batch PDP Generation System</h1>
+  <div class="detail-tags">Desktop Application / Automation / Product Imagery</div>
+  <img class="detail-hero-img" src="images/PDP-hero.webp" alt="Batch PDP Generation System Hero" style="display:block; object-fit:cover;">
+  <div class="detail-body">
+    <p>Desktop application built for fashion brands to automate product detail page imagery at scale. Select AI models, pair them with garments, hit run - and receive hundreds of studio-quality PDP images in hours instead of weeks.</p>
+    <h2>How It Works</h2>
+    <p>The system chains together multiple AI stages in the background: character sheet generation for consistent AI models, garment fitting from flat-lay product photos, face enhancement, and a library of preset PDP poses. Users only need to select which models and garments to use, set the number of outputs per product (1–5), and start the batch.</p>
+    <div class="workflow-steps" style="grid-template-columns: repeat(6, 1fr);">
+      <div class="workflow-step"><div class="step-num">01</div><div class="step-label">Select AI Models</div></div>
+      <div class="workflow-step"><div class="step-num">02</div><div class="step-label">Pair with Garments</div></div>
+      <div class="workflow-step"><div class="step-num">03</div><div class="step-label">Character Sheets</div></div>
+      <div class="workflow-step"><div class="step-num">04</div><div class="step-label">Garment Fitting</div></div>
+      <div class="workflow-step"><div class="step-num">05</div><div class="step-label">Face Enhancement</div></div>
+      <div class="workflow-step"><div class="step-num">06</div><div class="step-label">PDP Outputs</div></div>
+    </div>
+    <h2>Output Examples</h2>
+  </div>
+  <div class="detail-gallery">
+    <div class="gallery-slot"><img src="images/PDP-1.webp" alt="PDP Output 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot"><img src="images/PDP-2.webp" alt="PDP Output 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot"><img src="images/PDP-3.webp" alt="PDP Output 3" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot"><img src="images/PDP-4.webp" alt="PDP Output 4" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+  </div>
+</div></div>
+
+<!-- PENTI -->
+<div class="page" id="page-penti"><div class="detail">
+  <div class="detail-back" onclick="showHome()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>Back to Projects</div>
+  <h1>Penti</h1>
+  <div class="detail-tags">Sleepwear & Underwear / Product Imagery</div>
+  <img class="detail-hero-img" src="images/penti-hero.webp" alt="Penti Hero" style="display:block; object-fit:cover;">
+  <div class="detail-body">
+    <p>AI-generated product visuals for Penti's pajama and underwear lines. Studio-quality on-model shots produced entirely through generative AI, matching the brand's existing visual standards for e-commerce product pages.</p>
+    <h2>Gallery</h2>
+  </div>
+  <div style="display:flex; gap:16px; height:400px; justify-content:center; margin:32px 0;">
+    <div style="height:100%; aspect-ratio:4/5; overflow:hidden; border-radius:6px; flex-shrink:0;">
+      <img src="images/penti-1.webp" alt="Penti Look 1" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div style="height:100%; aspect-ratio:9/16; overflow:hidden; border-radius:6px; flex-shrink:0;">
+      <video src="images/penti-2.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    </div>
+    <div style="height:100%; aspect-ratio:4/5; overflow:hidden; border-radius:6px; flex-shrink:0;">
+      <img src="images/penti-3.webp" alt="Penti Look 3" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+  </div>
+</div></div>
+
+<!-- PROXIMO -->
+<div class="page" id="page-proximo"><div class="detail">
+  <div class="detail-back" onclick="showHome()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>Back to Projects</div>
+  <h1>Proximo Spirits</h1>
+  <div class="detail-tags">Product Photography / Lifestyle / Video Production</div>
+  <img src="images/proximo-hero.webp" alt="Proximo Spirits Hero" style="width:100%; aspect-ratio:2/1; object-fit:cover; border-radius:8px; display:block; margin-bottom:40px;">
+  <div class="detail-body">
+    <p>AI-generated advertising visuals and video content for Jose Cuervo Tequila and whiskey brands. Product photography with precise bottle detail, label accuracy, and atmospheric lifestyle settings - all produced through generative AI with custom enhancement workflows for logo and text fidelity.</p>
+    <h2>Gallery</h2>
+  </div>
+  <div style="display:flex; gap:16px; height:400px; justify-content:center; margin:32px 0;">
+    <div style="height:100%; aspect-ratio:1/1; overflow:hidden; border-radius:6px; flex-shrink:0;">
+      <video src="images/proximo-1.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    </div>
+    <div style="height:100%; aspect-ratio:1/1; overflow:hidden; border-radius:6px; flex-shrink:0;">
+      <img src="images/proximo_2.webp" alt="Proximo 2" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div style="height:100%; aspect-ratio:1/1; overflow:hidden; border-radius:6px; flex-shrink:0;">
+      <video src="images/proximo-3.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    </div>
+  </div>
+</div></div>
+
+<!-- TETON -->
+<div class="page" id="page-teton"><div class="detail">
+  <div class="detail-back" onclick="showHome()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>Back to Projects</div>
+  <h1>Teton Sports</h1>
+  <div class="detail-tags">Outdoor Gear / Lifestyle Imagery</div>
+  <img class="detail-hero-img" src="images/teton-hero.webp" alt="Teton Sports Hero" style="display:block; object-fit:cover;">
+  <div class="detail-body">
+    <p>Lifestyle product imagery for camping and outdoor gear - tents and sleeping bags placed in natural mountain and wilderness settings. Focus on creating aspirational outdoor scenes while maintaining product accuracy and brand consistency.</p>
+    <h2>Gallery</h2>
+  </div>
+  <div class="detail-gallery three-col" style="grid-template-columns: repeat(3,1fr);">
+    <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/teton-1.webp" alt="Teton 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/teton-2.webp" alt="Teton 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+    <div class="gallery-slot" style="aspect-ratio:3/2;"><img src="images/teton-3.webp" alt="Teton 3" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+  </div>
+</div></div>
+
+<script>
+  var savedScrollY = 0;
+  function showHome() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-home').classList.add('active');
+    history.pushState(null, '', window.location.pathname);
+    initFadeObserver();
+    window.scrollTo({ top: savedScrollY });
+  }
+  function showProject(id) {
+    savedScrollY = window.scrollY;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    var page = document.getElementById('page-' + id);
+    if (page) { page.classList.add('active'); window.scrollTo({ top: 0 }); history.pushState(null, '', '#' + id); }
+  }
+  window.addEventListener('popstate', function() {
+    var hash = location.hash.replace('#', '');
+    if (hash && document.getElementById('page-' + hash)) { showProject(hash); } else { showHome(); }
+  });
+  window.addEventListener('DOMContentLoaded', function() {
+    var hash = location.hash.replace('#', '');
+    if (hash && document.getElementById('page-' + hash)) { showProject(hash); }
+    initFadeObserver();
+  });
+  function initFadeObserver() {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.fade-up').forEach(function(el) { el.classList.remove('visible'); observer.observe(el); });
+  }
+</script>
+</body>
+</html>
